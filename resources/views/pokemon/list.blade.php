@@ -8,3 +8,4 @@
             <li>{{ $pokemon['name'] }} - <a href="{{ $pokemon['name'] }}/fav">Add to favourites</a> / <a href="{{ $pokemon['name'] }}/unfav">Remove from favourites</a> <br> </li> 
         </a>
     @endforeach
+    {{ $pokemons->links() }}

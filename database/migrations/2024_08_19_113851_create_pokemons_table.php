@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pokemons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('hp');
-            $table->string('defence');
-            $table->string('speed');
-            $table->string('attack');
+            $table->string('hp')->nullable();
+            $table->string('defence')->nullable();
+            $table->string('speed')->nullable();
+            $table->string('attack')->nullable();
         });
     }
 

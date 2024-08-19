@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pokemon extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'pokemons';
+    protected $fillable = ['name', 'hp'];
 }

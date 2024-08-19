@@ -9,9 +9,10 @@ class PokemonController extends Controller
 {
     
     public function index(){
-        $response = Http::get('http://pokeapi.co/api/v2/pokemon')->json('results');        
+        // $response = Http::get('http://pokeapi.co/api/v2/pokemon')->json('results');
+        $pokemons = Pokemon::simplePaginate(10);
         return view ('pokemon.list', [
-            'pokemons' => $response
+            'pokemons' => $pokemons
         ]);
     }
 
