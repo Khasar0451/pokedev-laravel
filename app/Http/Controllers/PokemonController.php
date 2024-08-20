@@ -44,8 +44,13 @@ class PokemonController extends Controller
         }
         return redirect('/');
     }
-    public function removeFromFavourites($name) {
-        setcookie('favourites', $name, 1);
+    public function removeFromFavourites($name)
+    {
+        if (isset($_COOKIE['favourites'])) {
+            $pokemons = unserialize($_COOKIE['favourites']);
+            unset($pokemons[array_search($name, $pokemons)]);
+            setcookie('favourites', serialize($pokemons), 0, '/');
+        } 
         return redirect('/');
     }
     
