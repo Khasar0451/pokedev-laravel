@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Pokemon;
+use Illuminate\Support\Facades\Cookie;
 class PokemonController extends Controller
 {
     public function showList($pokemons)
@@ -18,18 +19,32 @@ class PokemonController extends Controller
         $pokemons = Pokemon::simplePaginate(10);
         return $this->showList($pokemons);
     }
+    
+    public function favouritesIndex(){        
+        $names = unserialize($_COOKIE['favourites']);
+        $pokemons = Pokemon::whereIn('name', $names)->simplePaginate(10);
+        return $this->showList($pokemons);
 
-
+    }
+    
     public function show($name){
         $response = Http::get("http://pokeapi.co/api/v2/pokemon/{$name}")->json();
         return view('pokemon.show', ['pokemon'=> $response]);
     }
 
-    public function fav($name){
-        setcookie('favourites', $name);
+    public function addToFavourites($name){
+
+        if (isset($_COOKIE['favourites'])) {
+            $pokemons = unserialize($_COOKIE['favourites']);
+            $pokemons[] = $name;
+            setcookie('favourites', serialize($pokemons),0,'/');
+        } else {
+            $pokemons = array($name);
+            setcookie('favourites', serialize($pokemons), 0, '/');
+        }
         return redirect('/');
     }
-    public function unfav($name) {
+    public function removeFromFavourites($name) {
         setcookie('favourites', $name, 1);
         return redirect('/');
     }
