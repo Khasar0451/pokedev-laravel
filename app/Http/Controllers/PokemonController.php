@@ -26,9 +26,13 @@ class PokemonController extends Controller
     }
 
     public function fav($name){
-
+        setcookie('favourites', $name);
+        return redirect('/');
     }
-    public function unfav($name) {}
+    public function unfav($name) {
+        setcookie('favourites', $name, 1);
+        return redirect('/');
+    }
     
     public function search(){
         $search = request()->input('search');
