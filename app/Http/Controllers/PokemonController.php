@@ -24,7 +24,6 @@ class PokemonController extends Controller
         $names = unserialize($_COOKIE['favourites']);
         $pokemons = Pokemon::whereIn('name', $names)->simplePaginate(10);
         return $this->showList($pokemons);
-
     }
     
     public function show($name){
@@ -36,6 +35,11 @@ class PokemonController extends Controller
 
         if (isset($_COOKIE['favourites'])) {
             $pokemons = unserialize($_COOKIE['favourites']);
+
+            if (array_search($name, $pokemons)){
+                return redirect('/');
+            }
+
             $pokemons[] = $name;
             setcookie('favourites', serialize($pokemons),0,'/');
         } else {
@@ -44,6 +48,7 @@ class PokemonController extends Controller
         }
         return redirect('/');
     }
+
     public function removeFromFavourites($name)
     {
         if (isset($_COOKIE['favourites'])) {

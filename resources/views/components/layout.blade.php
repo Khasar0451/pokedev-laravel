@@ -18,7 +18,9 @@
 </head>
 
 <body>
-    <h1>Pokédex</h1>
+    <a href="/"> 
+        <h1>Pokédex</h1>
+    </a>
     {{ $slot }}
 </body>
 
